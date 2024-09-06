@@ -1,0 +1,127 @@
+README.md - Gerenciamento de Tarefas
+Este projeto é um sistema de Gerenciamento de Tarefas desenvolvido com Spring Boot no backend e um front-end simples em HTML, CSS e JavaScript para interagir com o banco de dados via API REST.
+
+Funcionalidades
+Inserção de Tarefas: Permite adicionar uma nova tarefa com nome, descrição e prioridade.
+Consulta de Tarefas: Exibe todas as tarefas existentes no banco de dados.
+Prioridade: As tarefas podem ser marcadas como prioritárias.
+Persistência: As tarefas são salvas em um banco de dados relacional (H2 para desenvolvimento).
+Tecnologias Utilizadas
+Backend: Spring Boot 2.7.18
+Frontend: HTML, CSS, JavaScript
+Banco de Dados: H2 (em memória para testes)
+Ferramentas de Teste: JUnit 5, Mockito
+Maven: Gerenciador de dependências e plugins
+Instruções de Uso
+1. Configuração do Ambiente
+Requisitos
+Java 17
+Maven
+IDE como IntelliJ IDEA ou VSCode
+Configuração do Backend (Spring Boot)
+Clone este repositório:
+
+bash
+Copiar código
+git clone https://github.com/seu-usuario/gerenciamento-tarefas.git
+cd gerenciamento-tarefas
+Compile e execute o projeto:
+
+bash
+Copiar código
+mvn clean install
+mvn spring-boot:run
+O servidor Spring Boot será iniciado na porta 8080. A API estará disponível em http://localhost:8080/api/items.
+
+Endpoints da API
+GET /api/items - Retorna todas as tarefas.
+POST /api/items - Adiciona uma nova tarefa.
+Exemplo de JSON para adicionar uma tarefa:
+
+json
+Copiar código
+{
+  "nome": "Tarefa Exemplo",
+  "descricao": "Descrição da tarefa",
+  "prioridade": true,
+  "concluido": false
+}
+2. Configuração do Frontend (HTML)
+O front-end básico em HTML está localizado no diretório src/main/resources/static.
+
+O arquivo principal é index.html. Ele contém um formulário para adicionar tarefas e uma tabela para exibir as tarefas salvas no banco de dados.
+
+Estrutura do index.html:
+Formulário:
+
+Campos para Nome, Descrição e uma opção para marcar como Prioritário.
+Ao submeter o formulário, a tarefa é enviada ao backend via POST /api/items.
+Tabela:
+
+Exibe as tarefas salvas no banco de dados.
+A tabela é atualizada automaticamente após adicionar uma nova tarefa.
+Como Acessar o Frontend:
+Após iniciar o backend, abra o arquivo index.html no navegador.
+
+URL: http://localhost:8080/index.html
+
+3. Consultar o Banco de Dados via HTML
+O JavaScript embutido no arquivo index.html usa a API Fetch para consultar o banco de dados e exibir as informações dinamicamente.
+
+Consultando as Tarefas:
+O código JavaScript para consultar todas as tarefas usa a seguinte função:
+
+javascript
+Copiar código
+async function loadItems() {
+    const response = await fetch('http://localhost:8080/api/items');
+    const items = await response.json();
+
+    const tableBody = document.querySelector('#items-table tbody');
+    tableBody.innerHTML = ''; // Limpa a tabela
+
+    items.forEach(item => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td>${item.id}</td>
+            <td>${item.nome}</td>
+            <td>${item.descricao}</td>
+            <td>${item.prioridade ? 'Sim' : 'Não'}</td>
+            <td>${item.concluido ? 'Sim' : 'Não'}</td>
+        `;
+        tableBody.appendChild(row);
+    });
+}
+Essa função faz uma requisição GET ao endpoint /api/items e atualiza a tabela com os dados recebidos.
+
+4. Testes Automatizados
+O projeto possui testes automatizados para validar o comportamento do backend.
+
+Testes Unitários:
+Os testes unitários usam JUnit 5 e Mockito.
+Localizados em src/test/java/com/example/gerenciamentotarefas/service/ItemServiceTest.java.
+Executando os Testes:
+Para rodar os testes, use o Maven:
+
+bash
+Copiar código
+mvn test
+5. Banco de Dados H2
+Durante o desenvolvimento, o banco de dados H2 é usado para persistir os dados temporariamente.
+
+Como Acessar o Console do H2:
+Acesse o console do H2 em http://localhost:8080/h2-console.
+Use as seguintes credenciais:
+JDBC URL: jdbc:h2:mem:testdb
+User: sa
+Password: (deixe vazio)
+Próximos Passos
+Implementar melhorias no front-end (ex: editar e deletar tarefas).
+Adicionar filtros de consulta (ex: listar apenas as tarefas concluídas).
+Implementar autenticação e segurança na API.
+Problemas Conhecidos
+Atualmente, a edição e exclusão de tarefas não estão implementadas no front-end.
+Se precisar de ajuda ou encontrar problemas, entre em contato com o mantenedor.
+
+Licença
+Este projeto é distribuído sob a licença MIT
