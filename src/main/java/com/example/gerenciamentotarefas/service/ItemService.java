@@ -2,7 +2,6 @@ package com.example.gerenciamentotarefas.service;
 
 import com.example.gerenciamentotarefas.entity.Item;
 import com.example.gerenciamentotarefas.repository.ItemRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,7 +12,6 @@ public class ItemService {
 
     private final ItemRepository itemRepository;
 
-    @Autowired
     public ItemService(ItemRepository itemRepository) {
         this.itemRepository = itemRepository;
     }
