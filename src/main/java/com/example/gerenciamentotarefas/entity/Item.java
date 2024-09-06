@@ -1,10 +1,6 @@
 package com.example.gerenciamentotarefas.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Column;
+import javax.persistence.*;
 
 @Entity
 public class Item {
@@ -21,12 +17,16 @@ public class Item {
     private boolean concluido;
 
     // Construtores
-    public Item() {}
+    public Item(String titulo, boolean prioridade) {}
 
     public Item(String nome, String descricao) {
         this.nome = nome;
         this.descricao = descricao;
         this.concluido = false;
+    }
+
+    public Item() {
+
     }
 
     // Getters e Setters
@@ -60,5 +60,8 @@ public class Item {
 
     public void setConcluido(boolean concluido) {
         this.concluido = concluido;
+    }
+
+    public void setLista(Lista lista) {
     }
 }

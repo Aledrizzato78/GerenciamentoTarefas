@@ -1,11 +1,9 @@
 package com.example.gerenciamentotarefas.controller;
 
-import com.example.gerenciamentotarefas.entity.ListaService;
-import com.example.gerenciamentotarefas.service.ListaService;
+import com.example.gerenciamentotarefas.entity.Lista;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
+import com.example.gerenciamentotarefas.service.ListaService;
 
 @RestController
 @RequestMapping("/api/listas")
@@ -16,19 +14,19 @@ public class ListaController {
 
     // Criar uma nova lista
     @PostMapping
-    public ListaService criarLista(@RequestBody String nome) {
+    public Lista criarLista(@RequestBody String nome) {
         return listaService.criarLista(nome);
     }
 
     // Obter todas as listas
     @GetMapping
-    public List<ListaService> listarListas() {
+    public Iterable<Lista> listarListas() {
         return listaService.listarTodas();
     }
 
     // Atualizar o nome de uma lista
     @PutMapping("/{id}")
-    public ListaService atualizarLista(@PathVariable Long id, @RequestBody String novoNome) {
+    public Lista atualizarLista(@PathVariable Long id, @RequestBody String novoNome) {
         return listaService.atualizarLista(id, novoNome);
     }
 
