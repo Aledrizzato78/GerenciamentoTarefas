@@ -1,0 +1,6 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Fri Sep 06 11:24:44 BRT 2024
+javax.servlet-api-4.0.1.jar>central=
+javax.servlet-api-4.0.1.pom>central=
+javax.servlet-api-4.0.1-javadoc.jar>central=
+javax.servlet-api-4.0.1-sources.jar>central=

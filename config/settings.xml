@@ -1,0 +1,23 @@
+<settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 https://maven.apache.org/xsd/settings-1.0.0.xsd">
+
+    <!-- Defina um novo repositório local para este projeto -->
+    <localRepository>C:/Users/Latitude 5280/IdeaProjects/GerenciamentoTarefas/maven-repo</localRepository>
+
+    <mirrors>
+        <!-- Garanta que está usando apenas o repositório central do Maven -->
+        <mirror>
+            <id>central</id>
+            <mirrorOf>central</mirrorOf>
+            <url>https://repo.maven.apache.org/maven2</url>
+        </mirror>
+        <mirror>
+                <id>central</id>
+                <mirrorOf>*</mirrorOf> <!-- Usa este espelho para todos os repositórios -->
+                <url>https://repo.maven.apache.org/maven2</url>
+        </mirror>
+
+    </mirrors>
+
+</settings>
