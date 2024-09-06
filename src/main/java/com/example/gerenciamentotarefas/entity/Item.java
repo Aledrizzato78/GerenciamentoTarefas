@@ -16,17 +16,19 @@ public class Item {
 
     private boolean concluido;
 
-    // Construtores
-    public Item(String titulo, boolean prioridade) {}
+    // Adicionando o relacionamento ManyToOne com Lista
+    @ManyToOne
+    @JoinColumn(name = "lista_id", nullable = false)
+    private Lista lista;
 
+    // Construtores
     public Item(String nome, String descricao) {
         this.nome = nome;
         this.descricao = descricao;
         this.concluido = false;
     }
 
-    public Item() {
-
+    public Item(String titulo, boolean prioridade) {
     }
 
     // Getters e Setters
@@ -62,6 +64,11 @@ public class Item {
         this.concluido = concluido;
     }
 
+    public Lista getLista() {
+        return lista;
+    }
+
     public void setLista(Lista lista) {
+        this.lista = lista;
     }
 }
