@@ -66,4 +66,11 @@ public class ItemService {
     public List<Item> listarTodosOrdenadosPorPrioridade() {
         return itemRepository.findAllByOrderByPrioridadeDesc();
     }
+
+    public List<Item> listarItensPorEstadoEPrioridade(boolean concluido, boolean prioridade) {
+        return List.of();
+    }
 }
+
+
+

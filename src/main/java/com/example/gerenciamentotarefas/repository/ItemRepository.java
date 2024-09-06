@@ -17,4 +17,7 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
 
     // Método para ordenar os itens pela prioridade (primeiro os prioritários)
     List<Item> findAllByOrderByPrioridadeDesc();
+
+    // Método para buscar itens concluídos e prioritários (combinação de filtros)
+    List<Item> findByConcluidoAndPrioridade(boolean concluido, boolean prioridade);
 }

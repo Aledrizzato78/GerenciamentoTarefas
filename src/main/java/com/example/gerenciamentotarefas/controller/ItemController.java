@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,15 +35,16 @@ public class ItemController {
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    // Adiciona um novo item
+    // Adiciona um novo item com validação
     @PostMapping
-    public Item addItem(@RequestBody Item item) {
-        return itemService.addItem(item);
+    public ResponseEntity<Item> addItem(@Valid @RequestBody Item item) {
+        Item novoItem = itemService.addItem(item);
+        return ResponseEntity.ok(novoItem);
     }
 
     // Atualiza um item existente
     @PutMapping("/{id}")
-    public ResponseEntity<Item> updateItem(@PathVariable Long id, @RequestBody Item updatedItem) {
+    public ResponseEntity<Item> updateItem(@PathVariable Long id, @Valid @RequestBody Item updatedItem) {
         try {
             return ResponseEntity.ok(itemService.updateItem(id, updatedItem));
         } catch (IllegalArgumentException e) {
@@ -57,13 +59,7 @@ public class ItemController {
         return ResponseEntity.noContent().build();
     }
 
-    // Filtra itens pelo estado (concluído ou não)
-    @GetMapping("/filtrar")
-    public List<Item> listarItensPorEstado(@RequestParam boolean concluido) {
-        return itemService.listarItensPorEstado(concluido);
-    }
-
-    // Filtra itens por prioridade
+    // Filtra itens pela prioridade
     @GetMapping("/prioridade")
     public List<Item> listarItensPorPrioridade(@RequestParam boolean prioridade) {
         return itemService.listarItensPorPrioridade(prioridade);
@@ -73,5 +69,11 @@ public class ItemController {
     @GetMapping("/ordenar-prioridade")
     public List<Item> listarTodosOrdenadosPorPrioridade() {
         return itemService.listarTodosOrdenadosPorPrioridade();
+    }
+
+    // Filtra itens por estado e prioridade
+    @GetMapping("/filtrar")
+    public List<Item> listarItensPorEstadoEPrioridade(@RequestParam boolean concluido, @RequestParam boolean prioridade) {
+        return itemService.listarItensPorEstadoEPrioridade(concluido, prioridade);
     }
 }

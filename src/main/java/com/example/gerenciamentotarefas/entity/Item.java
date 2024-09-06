@@ -1,6 +1,7 @@
 package com.example.gerenciamentotarefas.entity;
 
 import javax.persistence.*;
+import javax.validation.constraints.*;
 
 @Entity
 public class Item {
@@ -9,36 +10,35 @@ public class Item {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank(message = "O nome do item não pode estar em branco.")
+    @Size(min = 3, max = 100, message = "O nome do item deve ter entre 3 e 100 caracteres.")
     @Column(nullable = false)
     private String nome;
 
+    @Size(max = 255, message = "A descrição não pode ter mais de 255 caracteres.")
     private String descricao;
 
     private boolean concluido;
 
-    // Adicionando o campo prioridade
     private boolean prioridade;
 
-    // Adicionando o relacionamento ManyToOne com Lista
     @ManyToOne
     @JoinColumn(name = "lista_id", nullable = false)
+    @NotNull(message = "Cada item deve estar associado a uma lista.")
     private Lista lista;
 
     // Construtores
-    public Item(String titulo, boolean prioridade) {}
+    public Item() {}
 
-    public Item(String nome, String descricao) {
+    public Item(String nome, String descricao, boolean prioridade, Lista lista) {
         this.nome = nome;
         this.descricao = descricao;
-        this.concluido = false;
-        this.prioridade = false; // Definindo prioridade como false por padrão
+        this.prioridade = prioridade;
+        this.lista = lista;
+        this.concluido = false; // por padrão, o item é não concluído
     }
 
-    public Item(String nome, String descricao, boolean prioridade) {
-        this.nome = nome;
-        this.descricao = descricao;
-        this.concluido = false;
-        this.prioridade = prioridade;
+    public Item(String titulo, boolean prioridade) {
     }
 
     // Getters e Setters
