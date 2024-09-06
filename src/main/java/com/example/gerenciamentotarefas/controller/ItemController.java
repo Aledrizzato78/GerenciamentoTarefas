@@ -56,4 +56,22 @@ public class ItemController {
         itemService.deleteItem(id);
         return ResponseEntity.noContent().build();
     }
+
+    // Filtra itens pelo estado (concluído ou não)
+    @GetMapping("/filtrar")
+    public List<Item> listarItensPorEstado(@RequestParam boolean concluido) {
+        return itemService.listarItensPorEstado(concluido);
+    }
+
+    // Filtra itens por prioridade
+    @GetMapping("/prioridade")
+    public List<Item> listarItensPorPrioridade(@RequestParam boolean prioridade) {
+        return itemService.listarItensPorPrioridade(prioridade);
+    }
+
+    // Ordena itens pela prioridade (primeiro os itens prioritários)
+    @GetMapping("/ordenar-prioridade")
+    public List<Item> listarTodosOrdenadosPorPrioridade() {
+        return itemService.listarTodosOrdenadosPorPrioridade();
+    }
 }

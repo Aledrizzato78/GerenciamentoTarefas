@@ -51,4 +51,19 @@ public class ItemService {
     public void deleteItem(Long id) {
         itemRepository.deleteById(id);
     }
+
+    // Filtrar itens pelo estado (concluído ou não)
+    public List<Item> listarItensPorEstado(boolean concluido) {
+        return itemRepository.findByConcluido(concluido);
+    }
+
+    // Filtrar itens pela prioridade
+    public List<Item> listarItensPorPrioridade(boolean prioridade) {
+        return itemRepository.findByPrioridade(prioridade);
+    }
+
+    // Ordenar itens pela prioridade
+    public List<Item> listarTodosOrdenadosPorPrioridade() {
+        return itemRepository.findAllByOrderByPrioridadeDesc();
+    }
 }

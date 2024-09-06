@@ -16,19 +16,29 @@ public class Item {
 
     private boolean concluido;
 
+    // Adicionando o campo prioridade
+    private boolean prioridade;
+
     // Adicionando o relacionamento ManyToOne com Lista
     @ManyToOne
     @JoinColumn(name = "lista_id", nullable = false)
     private Lista lista;
 
     // Construtores
+    public Item(String titulo, boolean prioridade) {}
+
     public Item(String nome, String descricao) {
         this.nome = nome;
         this.descricao = descricao;
         this.concluido = false;
+        this.prioridade = false; // Definindo prioridade como false por padrão
     }
 
-    public Item(String titulo, boolean prioridade) {
+    public Item(String nome, String descricao, boolean prioridade) {
+        this.nome = nome;
+        this.descricao = descricao;
+        this.concluido = false;
+        this.prioridade = prioridade;
     }
 
     // Getters e Setters
@@ -62,6 +72,14 @@ public class Item {
 
     public void setConcluido(boolean concluido) {
         this.concluido = concluido;
+    }
+
+    public boolean isPrioridade() {
+        return prioridade;
+    }
+
+    public void setPrioridade(boolean prioridade) {
+        this.prioridade = prioridade;
     }
 
     public Lista getLista() {
