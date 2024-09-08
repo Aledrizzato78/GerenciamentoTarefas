@@ -2,10 +2,14 @@ package com.example.gerenciamentotarefas.entity;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
+import java.time.LocalDateTime;
+import java.util.Objects;
 
 @Entity
+@Table(name = "items")
 public class Item {
 
+    private static final String titulo = new String();;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -18,27 +22,40 @@ public class Item {
     @Size(max = 255, message = "A descrição não pode ter mais de 255 caracteres.")
     private String descricao;
 
+    @Column(nullable = false)
     private boolean concluido;
 
+    @Column(nullable = false)
     private boolean prioridade;
 
-    @ManyToOne
-    @JoinColumn(name = "lista_id", nullable = false)
-    @NotNull(message = "Cada item deve estar associado a uma lista.")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "lista_id")
     private Lista lista;
 
-    // Construtores
-    public Item() {}
+    @Column(name = "data_criacao", nullable = false, updatable = false)
+    private LocalDateTime dataCriacao;
 
-    public Item(String nome, String descricao, boolean prioridade, Lista lista) {
+    @Column(name = "data_atualizacao")
+    private LocalDateTime dataAtualizacao;
+
+    // Construtores
+    public Item(String titulo, boolean prioridade) {
+        this.dataCriacao = LocalDateTime.now();
+    }
+
+    public Item(String nome, String descricao, boolean prioridade) {
+        this(titulo, prioridade);
         this.nome = nome;
         this.descricao = descricao;
         this.prioridade = prioridade;
-        this.lista = lista;
-        this.concluido = false; // por padrão, o item é não concluído
+        this.concluido = false;
     }
 
-    public Item(String titulo, boolean prioridade) {
+    public Item() {
+
+    }
+
+    public Item(String s, String s1, boolean b, Object o) {
     }
 
     // Getters e Setters
@@ -88,5 +105,65 @@ public class Item {
 
     public void setLista(Lista lista) {
         this.lista = lista;
+    }
+
+    public LocalDateTime getDataCriacao() {
+        return dataCriacao;
+    }
+
+    public LocalDateTime getDataAtualizacao() {
+        return dataAtualizacao;
+    }
+
+    public void setDataAtualizacao(LocalDateTime dataAtualizacao) {
+        this.dataAtualizacao = dataAtualizacao;
+    }
+
+    // Métodos utilitários
+    public void marcarComoConcluido() {
+        this.concluido = true;
+        this.dataAtualizacao = LocalDateTime.now();
+    }
+
+    public void desmarcarComoConcluido() {
+        this.concluido = false;
+        this.dataAtualizacao = LocalDateTime.now();
+    }
+
+    public void togglePrioridade() {
+        this.prioridade = !this.prioridade;
+        this.dataAtualizacao = LocalDateTime.now();
+    }
+
+    // Equals e HashCode
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Item item = (Item) o;
+        return Objects.equals(id, item.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
+
+    // ToString
+    @Override
+    public String toString() {
+        return "Item{" +
+                "id=" + id +
+                ", nome='" + nome + '\'' +
+                ", concluido=" + concluido +
+                ", prioridade=" + prioridade +
+                ", dataCriacao=" + dataCriacao +
+                '}';
+    }
+
+    // Método para atualizar a data de atualização
+    @PreUpdate
+    protected void onUpdate() {
+        this.dataAtualizacao = LocalDateTime.now();
     }
 }
