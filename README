@@ -77,9 +77,5 @@ Password: (deixe vazio)
 
 
 
-Próximos Passos
 
-Implementar melhorias no front-end (ex: editar e deletar tarefas).
-Adicionar filtros de consulta (ex: listar apenas as tarefas concluídas).
-Implementar autenticação e segurança na API.
 
